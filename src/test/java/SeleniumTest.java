@@ -1,31 +1,34 @@
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
+//import org.junit.After;
+//import org.junit.Assert;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.junit.jupiter.api.MethodOrderer;
+//import org.junit.jupiter.api.Order;
+//import org.junit.jupiter.api.TestMethodOrder;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // reikalinga, kad galetume rikiuoti, eiles tvarka daryti, reikia parasyti ranka
 public class SeleniumTest {
-    @Before // veiksmai kurie bus atliekami pries kiekviena testa
+    @BeforeTest // veiksmai kurie bus atliekami pries kiekviena testa
     public void setup(){
         Selenium.setup(); //suranda webdriveri, uzkruana url ir pan.
     }
-    @Test
-    @Order(1)
+    @Test (priority=1)
     public void searchByKeywordTest(){
         Selenium.search("Baranauskas");
     }
-    @Test
-    @Order(2)
+    @Test (priority=2)
     public void getResults(){
         Selenium.search("Baranauskas");
-        //pirmas parametras bus expected, o antras actual
-        Assert.assertEquals(188000, Selenium.getResults());
+        //pirmas parametras bus actual, o antras expected
+        Assert.assertEquals(191000, Selenium.getResults());
     }
 
-    @After
+    @AfterTest
     public void close(){
         Selenium.close();
     }
